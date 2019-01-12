@@ -11,10 +11,10 @@ succeeds. So, for many usecases the process of OTA update will be the
 same - a user will just repeat it until it succeeds, regardless whether
 there's a fallback firmware or not.
 
-yaota8266 is written with big firmwares and small flash sizes in mind.
-For example, it allows to have an OTA for full-fledged MicroPython
-(firmware sizes of 512+KB) on 1MB flash devices, and still have a
-small, but a filesystem.
+yaota8266 is written with big firmware and small flash sizes in mind.
+For example, it enables OTA updating for full-fledged MicroPython
+(firmware sizes of 512+ KB) on 1MB flash devices, and still have a
+small, but usable filesystem.
 
 
 Structure and algorithm
@@ -37,14 +37,14 @@ boot8266 works in the following way:
 4. If OTA mode is requested, boot8266 loads an application starting
    at the sector 1. This is intended to be the ota-server, but from
    boot8266's point of view, it's just a standard ESP8266 application,
-   which it loads recursively in the same (or very similar) way as
-   BootROM does it.
+   which it loads recursively in the same (or very similar) way that
+   the BootROM does.
 5. If OTA mode was not requested, boot8266 loads a user application
    which lies beyond the ota-server application end (offset is
-   configurable). The same note as above applies - boot8266 just loads
-   one or another application in the same way, and doesn't care what
-   they do (but boot8266 has partially hardcoded knowledge about sizes
-   of these applications, and verifies checksum only of the second one).
+   configurable). The above note applies here as well - boot8266 loads
+   an application in the same way, and doesn't care what it does.
+   (but boot8266 has partially hardcoded knowledge about sizes
+   of these applications, and verifies checksum of only the second one).
 
 ota-server works in the following way:
 
@@ -60,5 +60,5 @@ ota-server works in the following way:
 Known issues
 ------------
 
-yaota8266 is a work in progress and is not yet fully working per the
-spec above.
+yaota8266 is a work in progress and is not yet fully functional per the
+specs above.
