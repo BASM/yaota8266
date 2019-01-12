@@ -1,6 +1,6 @@
 CC = xtensa-lx106-elf-gcc
 # -O0 is mandatory, anything else will break inline asm
-CFLAGS = -O0 -I. -mlongcalls -ffunction-sections -fdata-sections
+CFLAGS = -O0 -I. -mlongcalls -ffunction-sections -fdata-sections -Werror
 LDLIBS = -nostdlib -lgcc
 LDFLAGS = -T./boot8266.ld -e start -Wl,-Map=$@.map -Wl,--cref
 
