@@ -8,6 +8,10 @@ all: config.h
 config.h:
 	cp config.h.example config.h
 
+
+deploy:
+	esptool.py write_flash 0x0 yaota8266.bin
+
 clean:
 	$(MAKE) -C boot8266 clean
 	$(MAKE) -C ota-server clean
