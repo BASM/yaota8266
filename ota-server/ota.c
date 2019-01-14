@@ -100,7 +100,7 @@ static void session_init(void) {
 
 static void ota_udp_incoming(void *arg, struct udp_pcb *upcb, struct pbuf *p, ip_addr_t *addr, u16_t port) {
 
-    printf("UDP incoming from: %x:%d, data=%p\n", (unsigned)addr->addr, port, p->payload);
+    printf("UDP incoming from: %x:%d, data=%p. ", (unsigned)addr->addr, port, p->payload);
     uint32_t start_time = system_get_time();
 
     if (p->len < sizeof(struct pkt_header)) {
@@ -109,7 +109,7 @@ static void ota_udp_incoming(void *arg, struct udp_pcb *upcb, struct pbuf *p, ip
     }
 
     struct pkt_seq *pkt = p->payload;
-    printf("Pkt id: %x\n", pkt->seq);
+    printf("Pkt num: %d ", pkt->seq);
 
     uint8_t sig_payload[RSA_BLK_SIZE];
     uint8_t *sig = (uint8_t*)p->payload + p->len - RSA_BLK_SIZE;
@@ -139,7 +139,7 @@ static void ota_udp_incoming(void *arg, struct udp_pcb *upcb, struct pbuf *p, ip
     AES_cbc_decrypt(&aes_ctx, (uint8_t*)hdr, (uint8_t*)hdr, p->len - RSA_BLK_SIZE - 4);
 #endif
 
-    printf("offset: %d len: %d\n", hdr->offset, hdr->len);
+    printf("offset: %d len: %d ", hdr->offset, hdr->len);
 
     if (hdr->len == 0) {
         write_buf();
