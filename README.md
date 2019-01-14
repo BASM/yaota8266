@@ -57,6 +57,39 @@ ota-server works in the following way:
 4. ota-client host-side application is provided to drive OTA upgrade
    process for a device in OTA mode.
 
+Build and run for dummy
+-----------------------
+
+For build you need type:
+
+* make
+
+It will do the following: 
+
+* create "config.h" from "config.h.example", you can edit if you want
+* generate priv.key, pub.key (and pubkey.h), please save priv.key, if you lose it, you cannot update firmware over OTA
+* build boot8266
+* build ota-server (OTA firmware application)
+* generate yaota8266.bin
+
+For deploy you need:
+
+* install esptool.py (programmer for ESP board)
+* plugin you board (to the usb or uart port)
+* type 'make deploy'
+
+It will write firmware to ESP board. ESP save last wifi configuration.
+If you start ota-server, the ESP load last configuration.
+If you don't know how ESP config wifi, you may load firmware-ota by UART first time,
+and set configuration. Next time, after ota-server start it load it config.
+
+For write firmware-ota by manual (example from micropython in the project "micropython"):
+
+* cd ports/esp8266
+* make
+* make ota
+* esptool.py write\_flash 0x3c000 build/firmware-ota.bin 
+
 Known issues
 ------------
 
